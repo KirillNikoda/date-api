@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
+    [Authorize]
     public class UsersController : BaseApiController
     {
         private readonly IUserRepository _userRepository;
@@ -22,7 +23,6 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
             var users = await _userRepository.GetUsersAsync();
@@ -31,7 +31,6 @@ namespace API.Controllers
             return Ok(usersToReturn);
         }
 
-        [Authorize]
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
